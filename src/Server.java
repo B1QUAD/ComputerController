@@ -1,10 +1,15 @@
-import java.net.*;
-import java.io.*;
-import java.util.*;
-import java.awt.*;
+import java.awt.Robot;
+import java.awt.AWTException;
+import java.awt.MouseInfo;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.net.ServerSocket;
+import java.net.InetAddress;
+import java.net.Inet4Address;
 
 class Server {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws AWTException, IOException {
         Robot robot = new Robot();
         ServerSocket serverSocket = new ServerSocket(6969);
         Socket socket = serverSocket.accept();

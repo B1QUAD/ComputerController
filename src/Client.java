@@ -1,9 +1,12 @@
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Random;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.awt.AWTException;
 import java.awt.Dimension;
 import java.awt.Point;
 
@@ -13,7 +16,7 @@ import java.awt.Point;
  */
 
 class Client {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws UnknownHostException, IOException, AWTException {
         // create socket at ipv4 with port 6969 ;)
         Socket socket = new Socket("192.168.254.13", 6969);
 
@@ -42,7 +45,7 @@ class Client {
         }
     }
 
-    public static void type(String str) throws Exception {
+    public static void type(String str) throws AWTException {
         Robot robot = new Robot();
 
         for(char c : str.toCharArray()) {
@@ -62,11 +65,10 @@ class Client {
         } 
     }
 
-    public static void startTheFrickening() throws Exception {
+    public static void startTheFrickening() throws AWTException {
         Robot robot = new Robot();
         Random random = new Random();
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-
 
         int width = (int)screen.getWidth();
         int height = (int)screen.getHeight();
