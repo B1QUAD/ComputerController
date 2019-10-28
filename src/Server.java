@@ -84,31 +84,35 @@ class Server extends JFrame implements KeyListener, MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
-
+        //left-click will be stored in Adrian with a keyPressed = 1000
+        //right-click will be stored in Adrian with a keyPressed = 1001
+        //middle-click will be stored in Adrian with a keyPressed = 1002
+        
+        //use swingutilities to differentiate between the different clicks
+        if(SwingUtilities.isLeftMouseButton(e)) {
+            adrian = new Adrian(adrian.getMouse(), 1000); //left click
+        }
+        else if(SwingUtilities.isRightMouseButton(e)) {
+            adrian = new Adrian(adrian.getMouse(), 1001); //right click
+        }
+        else if(SwingUtilities.isMiddleMouseButton(e)) {
+            adrian = new Adrian(adrian.getMouse(), 1002); //middle click
+        }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-
     }
 }
