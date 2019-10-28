@@ -17,21 +17,46 @@ import java.awt.Point;
 
 class Client {
     public static void main(String[] args) throws UnknownHostException, IOException, AWTException {
-        // create socket at ipv4 with port 6969 ;)
-        Socket socket = new Socket("192.168.254.13", 6969);
+       
 
         // create a robot which is going to move the mouse
         Robot robot = new Robot();
+        for(int i = 5; i > 0; i--) {
+            System.out.println(i);
+            robot.delay(1000);
+        }
 
+        // create socket at ipv4 with port 6969 ;)
+        Socket socket = new Socket("192.168.254.13", 6969);
+
+        
+        
         // set up an inputstream to receive info from server
         ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
-
+        
         try {
+            int tempKey = -1;
             while (true) {
                 // receive input from server and move mouse to point that the server sent
-                Point serverPoint = (Point) input.readObject();
-                System.out.println(serverPoint.toString());
-                // robot.mouseMove(serverPoint.x, serverPoint.y);
+                Adrian serverInfo = (Adrian) input.readObject();
+                System.out.println(serverInfo);
+                robot.mouseMove(serverInfo.getMouse().x, serverInfo.getMouse().y);
+
+                // if(tempKey != -1) {
+                //     tempKey = serverInfo.getKeyPressed();
+                //     robot.keyPress(KeyEvent.getExtendedKeyCodeForChar(tempKey));
+                //     System.out.println("Pressed " + tempKey);
+                // }
+                // else {
+                //     try {
+                //         robot.keyRelease(tempKey);
+                //         // System.out.println("Released " + tempKey);
+                //     }
+                //     catch(Exception e) {
+
+                //     }
+                //     tempKey = -1;
+                // }
             }
         } catch (Exception e) {
             System.out.println("Starting Process");
