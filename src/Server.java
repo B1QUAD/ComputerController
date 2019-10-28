@@ -12,18 +12,11 @@ import java.awt.event.*;
 import java.net.ServerSocket;
 import java.net.InetAddress;
 import java.net.Inet4Address;
+import javax.swing.*;
 
-class Server extends JFrame implements KeyListener, MouseListener{
-    public static Adrian adrian = new Adrian(MouseInfo.getPointerInfo().getLocation(), -1);
-
-    public Server() {
-        this.setSize((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight());
-        this.setUndecorated(true);
-        this.setBackground(new Color(0, 0, 0, 1));
-        this.setVisible(true);
-        this.addKeyListener(this);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
+class Server {
+    public static volatile Adrian adrian = new Adrian(MouseInfo.getPointerInfo().getLocation(), -1);
+    
     public static void main(String[] args) throws AWTException, IOException {
         Robot robot = new Robot();
         ServerSocket serverSocket = new ServerSocket(6969);
@@ -34,7 +27,8 @@ class Server extends JFrame implements KeyListener, MouseListener{
 
         Socket socket = serverSocket.accept();
 
-        Server server = new Server();
+        Listeners listeners = new Listeners();
+        listeners.run();
         
 
         ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
@@ -44,75 +38,81 @@ class Server extends JFrame implements KeyListener, MouseListener{
         try {
             // Adrian adrian = new Adrian(MouseInfo.getPointerInfo().getLocation(), new int[]{}, new int[]{});
             while(true) {
+                Server server = new Server();
                 point2 = point1;
-                point1 = server.getMousePosition();
-                Server.adrian = new Adrian(point1, -1);
-
-                if(!point1.equals(point2))
-                    output.writeObject(adrian);
+                point1 = MouseInfo.getPointerInfo().getLocation();
+                adrian = new Adrian(point1, adrian.keyPressed);
                 
-                robot.delay(10);
+                output.writeObject(adrian);
+                
+                
+                Server.adrian = new Adrian(adrian.mouseLocation, -1);
+                
+                robot.delay(1);
             }
         }
         catch(Exception e) {
             System.out.println("Client closed the connection like a wussy.");
-        }
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-//         String key = e.getKeyText(e.getKeyCode());
-        
-//         if(key.equals("Delete"))
-//             System.exit(-1);
-//         adrian = new Adrian(adrian.getMouse(), e.getKeyCode());
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-//         adrian = new Adrian(adrian.getMouse(), -1);
-        String key = e.getKeyText(e.getKeyCode());
-        
-        if(key.equals("Delete"))
             System.exit(-1);
-        Server.adrian = new Adrian(Server.adrian.getMouse(), e.getKeyCode());
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        //left-click will be stored in Adrian with a keyPressed = 1000
-        //right-click will be stored in Adrian with a keyPressed = 1001
-        //middle-click will be stored in Adrian with a keyPressed = 1002
-        
-        //use swingutilities to differentiate between the different clicks
-        if(SwingUtilities.isLeftMouseButton(e)) {
-            Server.adrian = new Adrian(Server.adrian.getMouse(), 1000); //left click
-        }
-        else if(SwingUtilities.isRightMouseButton(e)) {
-            Server.adrian = new Adrian(Server.adrian.getMouse(), 1001); //right click
-        }
-        else if(SwingUtilities.isMiddleMouseButton(e)) {
-            Server.adrian = new Adrian(Server.adrian.getMouse(), 1002); //middle click
         }
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
+//    @Override
+//    public void keyTyped(KeyEvent e) {
+//    }
+//
+//    @Override
+//    public void keyPressed(KeyEvent e) {
+////         String key = e.getKeyText(e.getKeyCode());
+//        
+////         if(key.equals("Delete"))
+////             System.exit(-1);
+////         adrian = new Adrian(adrian.getMouse(), e.getKeyCode());
+//    }
+//
+//    @Override
+//    public void keyReleased(KeyEvent e) {
+////         adrian = new Adrian(adrian.getMouse(), -1);
+//        String key = e.getKeyText(e.getKeyCode());
+//        
+//        if(key.equals("Delete"))
+//            System.exit(-1);
+//        adrian = new Adrian(adrian.getMouse(), e.getKeyCode());
+//    }
+//
+//    @Override
+//    public void mouseClicked(MouseEvent e) {
+//        //left-click will be stored in Adrian with a keyPressed = 1000
+//        //right-click will be stored in Adrian with a keyPressed = 1001
+//        //middle-click will be stored in Adrian with a keyPressed = 1002
+//        
+//        //use swingutilities to differentiate between the different clicks
+//        if(SwingUtilities.isLeftMouseButton(e)) {
+//            adrian = new Adrian(adrian.getMouse(), 1000); //left click
+//        }
+//        else if(SwingUtilities.isRightMouseButton(e)) {
+//            adrian = new Adrian(adrian.getMouse(), 1001); //right click
+//        }
+//        else if(SwingUtilities.isMiddleMouseButton(e)) {
+//            adrian = new Adrian(adrian.getMouse(), 1002); //middle click
+//        }
+//    }
+//
+//    @Override
+//    public void mousePressed(MouseEvent e) {
+//    }
+//
+//    @Override
+//    public void mouseReleased(MouseEvent e) {
+//    }
+//
+//    @Override
+//    public void mouseEntered(MouseEvent e) {
+//    }
+//
+//    @Override
+//    public void mouseExited(MouseEvent e) {
+//    }
 }
+
+
