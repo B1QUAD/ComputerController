@@ -2,7 +2,7 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.io.Serializable;
 
-class Adrian implements Serializable{
+class Adrian implements Serializable {
     Point mouseLocation;
     int keyPressed;
 
@@ -11,21 +11,21 @@ class Adrian implements Serializable{
         this.keyPressed = keyPressed;
     }
 
-    public Point getMouse() {
-        return mouseLocation;
-    }
-
-    public void setMouse(Point mouseLocation) {
-        this.mouseLocation = mouseLocation;
-    }
-
-    public int getKeyPressed() {
-        return keyPressed;
-    }
-
-    public void setKeyPressed(int keyPressed) {
-        this.keyPressed = keyPressed;
-    }
+//    public Point getMouse() {
+//        return mouseLocation;
+//    }
+//
+//    public void setMouse(Point mouseLocation) {
+//        this.mouseLocation = mouseLocation;
+//    }
+//
+//    public int getKeyPressed() {
+//        return keyPressed;
+//    }
+//
+//    public void setKeyPressed(int keyPressed) {
+//        this.keyPressed = keyPressed;
+//    }
 
     // public int getKeyReleased() {
     //     return keyReleased;
@@ -39,9 +39,9 @@ class Adrian implements Serializable{
         String str = "";
 
         str += "Mouse[" + mouseLocation.x + ", " + mouseLocation.y + "]";
-
-        if(keyPressed >= 0)
-            str += "KeyPress[" + KeyEvent.getKeyText(keyPressed) + "]";
+        str += "\nKey[" + keyPressed + "]";
+//        if(keyPressed >= 0)
+//            str += "KeyPress[" + KeyEvent.getKeyText(keyPressed) + "]";
         // str += "KeyReleased[" + KeyEvent.getKeyText(keyReleased) + "]";
 
         return str;
