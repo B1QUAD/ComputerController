@@ -65,16 +65,21 @@ class Server extends JFrame implements KeyListener, MouseListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
+//         String key = e.getKeyText(e.getKeyCode());
+        
+//         if(key.equals("Delete"))
+//             System.exit(-1);
+//         adrian = new Adrian(adrian.getMouse(), e.getKeyCode());
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+//         adrian = new Adrian(adrian.getMouse(), -1);
         String key = e.getKeyText(e.getKeyCode());
         
         if(key.equals("Delete"))
             System.exit(-1);
         adrian = new Adrian(adrian.getMouse(), e.getKeyCode());
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        adrian = new Adrian(adrian.getMouse(), -1);
     }
 
     @Override
