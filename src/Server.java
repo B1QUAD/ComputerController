@@ -28,7 +28,7 @@ class Server {
         ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
 
         Point point1 = MouseInfo.getPointerInfo().getLocation();
-        Point point2 = null;
+        // Point point2 = null;
 
         ImageIcon screen = null;
         JLabel image = new JLabel();
@@ -38,7 +38,7 @@ class Server {
         try {
             while (true) {
                 Server server = new Server();
-                point2 = point1;
+                // point2 = point1;
                 point1 = MouseInfo.getPointerInfo().getLocation();
                 adrian = new Adrian(point1, adrian.keyPressed);
 
