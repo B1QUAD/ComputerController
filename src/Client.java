@@ -27,7 +27,7 @@ class Client {
         }
 
         // create socket at ipv4 with port 6969 ;)
-        Socket socket = new Socket("192.168.254.13", 6969);
+        Socket socket = new Socket("208.84.138.20", 6969);
 
         
         
