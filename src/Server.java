@@ -46,7 +46,7 @@ class Server extends JFrame implements KeyListener, MouseListener{
             while(true) {
                 point2 = point1;
                 point1 = server.getMousePosition();
-                Server.adrian = new Adrian(point1, adrian.getKeyPressed());
+                Server.adrian = new Adrian(point1, -1);
 
                 if(!point1.equals(point2))
                     output.writeObject(adrian);
@@ -79,7 +79,7 @@ class Server extends JFrame implements KeyListener, MouseListener{
         
         if(key.equals("Delete"))
             System.exit(-1);
-        adrian = new Adrian(adrian.getMouse(), e.getKeyCode());
+        Server.adrian = new Adrian(Server.adrian.getMouse(), e.getKeyCode());
     }
 
     @Override
@@ -90,13 +90,13 @@ class Server extends JFrame implements KeyListener, MouseListener{
         
         //use swingutilities to differentiate between the different clicks
         if(SwingUtilities.isLeftMouseButton(e)) {
-            adrian = new Adrian(adrian.getMouse(), 1000); //left click
+            Server.adrian = new Adrian(Server.adrian.getMouse(), 1000); //left click
         }
         else if(SwingUtilities.isRightMouseButton(e)) {
-            adrian = new Adrian(adrian.getMouse(), 1001); //right click
+            Server.adrian = new Adrian(Server.adrian.getMouse(), 1001); //right click
         }
         else if(SwingUtilities.isMiddleMouseButton(e)) {
-            adrian = new Adrian(adrian.getMouse(), 1002); //middle click
+            Server.adrian = new Adrian(Server.adrian.getMouse(), 1002); //middle click
         }
     }
 
