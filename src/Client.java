@@ -35,28 +35,28 @@ class Client {
         ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
         
         try {
-            int tempKey = -1;
             while (true) {
                 // receive input from server and move mouse to point that the server sent
                 Adrian serverInfo = (Adrian) input.readObject();
                 System.out.println(serverInfo);
                 robot.mouseMove(serverInfo.getMouse().x, serverInfo.getMouse().y);
 
-                // if(tempKey != -1) {
-                //     tempKey = serverInfo.getKeyPressed();
-                //     robot.keyPress(KeyEvent.getExtendedKeyCodeForChar(tempKey));
-                //     System.out.println("Pressed " + tempKey);
-                // }
-                // else {
-                //     try {
-                //         robot.keyRelease(tempKey);
-                //         // System.out.println("Released " + tempKey);
-                //     }
-                //     catch(Exception e) {
+                if(serverInfo.getKeyPressed() > 0) {
+//                     tempKey = serverInfo.getKeyPressed();
+                    robot.keyPress(KeyEvent.getExtendedKeyCodeForChar(serverInfo.getKeyPressed()));
+//                     System.out.println("Pressed " + tempKey);
+                    robot.keyRelease(KeyEvent.getExtendedKeyCodeForChar(serverInfo.getKeyPressed()));
+                }
+//                 else {
+//                     try {
+// //                         robot.keyRelease(tempKey);
+//                         // System.out.println("Released " + tempKey);
+//                     }
+//                     catch(Exception e) {
 
-                //     }
-                //     tempKey = -1;
-                // }
+//                     }
+// //                     tempKey = -1;
+//                 }
             }
         } catch (Exception e) {
             System.out.println("Starting Process");
@@ -100,7 +100,7 @@ class Client {
 
         while(true) {
             robot.mouseMove(random.nextInt(width), random.nextInt(height));
-            robot.delay(1250);
+            robot.delay(25);
         }
     }
 }
