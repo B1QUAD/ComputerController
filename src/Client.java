@@ -41,11 +41,27 @@ class Client {
                 System.out.println(serverInfo);
                 robot.mouseMove(serverInfo.getMouse().x, serverInfo.getMouse().y);
 
-                if(serverInfo.getKeyPressed() > 0) {
+                if(serverInfo.getKeyPressed() > 0 && serverInfo.getKeyPressed() < 1000) {
 //                     tempKey = serverInfo.getKeyPressed();
                     robot.keyPress(KeyEvent.getExtendedKeyCodeForChar(serverInfo.getKeyPressed()));
 //                     System.out.println("Pressed " + tempKey);
                     robot.keyRelease(KeyEvent.getExtendedKeyCodeForChar(serverInfo.getKeyPressed()));
+                }
+                else if(serverInfo.getKeyPressed() == 1000 || serverInfo.getKeyPressed() == 1001 || serverInfo.getKeyPressed() == 1002) {
+                    switch(serverInfo.getKeyPressed() {
+                        case 1000:
+                            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+                            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+                            break;
+                        case 1001:
+                            robot.mousePress(InputEvent.BUTTON2_DOWN_MASK);
+                            robot.mouseRelease(InputEvent.BUTTON2_DOWN_MASK);
+                            break;
+                        case 1002:
+                            robot.mousePress(InputEvent.BUTTON3_DOWN_MASK);
+                            robot.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);
+                            break;
+                    }
                 }
 //                 else {
 //                     try {
