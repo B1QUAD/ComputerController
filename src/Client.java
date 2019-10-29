@@ -3,7 +3,10 @@ import java.awt.event.*;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.*;
 
 /**
  * Property of CASpirations No touchy or else we sue. If this is on your
@@ -25,23 +28,27 @@ class Client {
         // school
         Socket socket = new Socket("localhost", 6969); // contains your ip
 
+        socket.setTcpNoDelay(true);
+
         // set up object streams to send and receive information from the server
-        ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
-        ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
+        OutputStream output = socket.getOutputStream();
+        ObjectInputStream input = new ObjectInputStream((socket.getInputStream()));
 
         Rectangle screenRect = new Rectangle((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth());
-        ImageIcon screen = new ImageIcon(robot.createScreenCapture(screenRect));
+        // ImageIcon screen = new ImageIcon(robot.createScreenCapture(screenRect));
 
         try {
-            while (true) {
+            while(true) {
                 // receive input from server and move mouse to point that the server sent
                 Adrian serverInfo = (Adrian) input.readObject();
-                screen = new ImageIcon(robot.createScreenCapture(screenRect));
-                output.writeObject(screen);
-                output.flush();
-                output.reset();
-
+                BufferedImage screen = robot.createScreenCapture(screenRect);
+                // System.out.println("about to send " + screen);
+                ImageIO.write(screen, "PNG", output);
+                // System.out.println("Sent " + screen);
+                // output.flush();
+                // System.out.println("Flushed output");
+            
                 // System.out.println(serverInfo); // prints out the current mouse location and
                 // keys pressed
 
@@ -71,9 +78,12 @@ class Client {
                         break;
                     }
                 }
+
+                // System.out.println("finished loop.");
             }
         } catch (Exception e) {
             System.out.println("Starting Process");
+            e.printStackTrace();
             // ProcessBuilder process = new ProcessBuilder("notepad.exe");
             // Process notepadOpen = process.start();
 

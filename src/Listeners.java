@@ -3,15 +3,14 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Listeners extends JFrame implements Runnable, KeyListener, MouseListener {
-    public static JFrame frame = new JFrame();
+    public static volatile JFrame frame = new JFrame();
 
     public Listeners() {
         Server server = new Server();
         // this.setSize(100, 100);
         this.setLocationRelativeTo(null);
-        frame.setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
-                (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight());
-        frame.setUndecorated(true);
+        frame.setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+        // frame.setUndecorated(true);
         // frame.setBackground(new Color(0, 0, 0, 1)); //this is to make it invisible
         frame.setVisible(true);
         frame.addKeyListener(this);
